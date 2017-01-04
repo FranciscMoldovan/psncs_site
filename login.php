@@ -21,6 +21,7 @@ $password = mysqli_real_escape_string($connection, $password);
 $db = mysqli_select_db($connection, "company");
 // SQL query to fetch information of registerd users and finds user match.
 $query = mysqli_query($connection, "select * from login where password='$password' AND username='$username'");
+
 $rows = mysqli_num_rows($query);
 if ($rows == 1) {
 $_SESSION['login_user']=$username; // Initializing Session

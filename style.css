@@ -43,9 +43,9 @@ font-family:raleway
 }
 input[type=submit] {
 width:100%;
-background-color:#FFBC00;
+background-color:#00cc00;
 color:#fff;
-border:2px solid #FFCB00;
+border:2px solid #00ff00;
 padding:10px;
 font-size:20px;
 cursor:pointer;
