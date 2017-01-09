@@ -11,7 +11,7 @@ span {
 color:red
 }
 h2 {
-background-color:#FEFFED;
+background-color:#ffffcc;
 text-align:center;
 border-radius:10px 10px 0 0;
 margin:-10px -40px;
@@ -56,7 +56,7 @@ margin-bottom:15px
 padding:50px;
 border:1px dashed grey;
 font-size:20px;
-background-color:#DCE6F7
+background-color:#66ff66
 }
 #logout {
 float:right;
@@ -65,7 +65,7 @@ border:dashed 1px gray
 }
 a {
 text-decoration:none;
-color:#6495ed
+color:#ff0000
 }
 i {
 color:#6495ed

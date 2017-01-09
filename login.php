@@ -1,35 +1,48 @@
 <?php
-session_start(); // Starting Session
-$error=''; // Variable To Store Error Message
-if (isset($_POST['submit'])) {
-if (empty($_POST['username']) || empty($_POST['password'])) {
-$error = "Username or Password is invalid";
+// Start the new session
+session_start(); 
+// Variable for error
+$error=''; 
+// Check for the submit
+if (isset($_POST['submit'])) 
+{	
+	// Check textfields for contents
+	if (empty($_POST['username']) || empty($_POST['password'])) 
+	{	// Failure of check
+		$error = "Username or Password is invalid";
+	}
+	else
+	{
+		// Define $username and $password
+		$username=$_POST['username'];
+		$password=$_POST['password'];
+		// perform a connection to the SQL server
+		$connection = mysqli_connect("localhost", "root", "root") or die;
+		// Un-qoute quoted string
+		$username = stripslashes($username);
+		$password = stripslashes($password);
+		// Get rid of special characters
+		$username = mysqli_real_escape_string($connection, $username);
+		$password = mysqli_real_escape_string($connection, $password);
+		// Select the database
+		$db = mysqli_select_db($connection, "psncs_login");
+		// SQL query to look for user to be logged in
+		$query = mysqli_query($connection, "select * from login where password='$password' AND username='$username'");
+		
+		$rows = mysqli_num_rows($query);
+		if ($rows == 1) {
+			log_data($username);
+			// Initialise session
+			$_SESSION['login_user']=$username;
+			// Redirect to the user page
+			header("location: profile.php");
+		}
+	else 
+	{
+		$error = "Username or Password is invalid";
+	}
+		mysqli_close($connection); // Closing Connection
+	}
 }
-else
-{
-// Define $username and $password
-$username=$_POST['username'];
-$password=$_POST['password'];
-// Establishing Connection with Server by passing server_name, user_id and password as a parameter
-$connection = mysqli_connect("localhost", "root", "root");
-// To protect MySQL injection for Security purpose
-$username = stripslashes($username);
-$password = stripslashes($password);
-$username = mysqli_real_escape_string($connection, $username);
-$password = mysqli_real_escape_string($connection, $password);
-// Selecting Database
-$db = mysqli_select_db($connection, "psncs_login");
-// SQL query to fetch information of registerd users and finds user match.
-$query = mysqli_query($connection, "select * from login where password='$password' AND username='$username'");
 
-$rows = mysqli_num_rows($query);
-if ($rows == 1) {
-$_SESSION['login_user']=$username; // Initializing Session
-header("location: profile.php"); // Redirecting To Other Page
-} else {
-$error = "Username or Password is invalid";
-}
-mysqli_close($connection); // Closing Connection
-}
-}
 ?>
